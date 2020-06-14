@@ -1,0 +1,6 @@
+M
+MAI;Matematicas para Ingenieria 1;6;5;5;ITI_2018
+POO;Programación Orientada a Objetos;6;5;6;ITI_2018
+IBD;Intro a Base de Datos;7;5;6;ITI_2018
+ENR;Enroutamiento de Redes;5;5;5;ITI_2018
+

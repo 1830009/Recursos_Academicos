@@ -1,0 +1,7 @@
+C
+ITI;Ing. en Tecnologias de la_Informacion
+ISA;Ing. en Sistemas Automotrices
+IM;Ing. en Mecatronica
+ITM;Ingenieria en Tecnologías de Manofactura
+PyMES;Lic. en Pequeñas y Medianas empresas
+

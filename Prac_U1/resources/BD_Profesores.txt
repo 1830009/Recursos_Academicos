@@ -1,0 +1,7 @@
+P
+DSPM;Said Polanco Martagon;ITI;Doctor;TC
+MJJL;Jorge Jasso Luna;ITI;Maestria;TC
+IJRM;Jesus Rodríguez Moreno;ITI;Ingeniero;TP
+DHHR;Hiram Herrera Rivas;ITI;Doctor;TC
+DCOG;Carlos Orozco García;ITI;Doctor;TC
+

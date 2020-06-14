@@ -1,0 +1,9 @@
+-USUARIO; neto
+-CONTRASEÑA; Netinho13...
+-RUTA_SCRIPT_SQL; resources/BD.sql
+-RUTA_CARPETA_DATOS_TABLAS; resources/
+-NOMBRE_BD; Rec_Academicos
+-URL_NEW; jdbc:mysql://localhost:3306/?serverTimezone=UTC
+-URL_CONEXION; jdbc:mysql://localhost:3306/
+-DRIVER; com.mysql.cj.jdbc.oDriver
+

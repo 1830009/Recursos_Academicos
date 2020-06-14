@@ -1,0 +1,98 @@
+DROP TABLE IF EXISTS `Aula`;
+CREATE TABLE `Aula` (
+  `Aula_ID` varchar(10) NOT NULL,
+  `Nombre` varchar(40) NOT NULL,
+  `Capacidad` int NOT NULL
+  PRIMARY KEY (`Aula_ID`));
+
+--
+-- Table structure for table `Carrera`
+--
+
+DROP TABLE IF EXISTS `Carrera`;
+CREATE TABLE `Carrera` (
+  `Carrera_ID` varchar(10) NOT NULL,
+  `Nombre` varchar(50) NOT NULL,
+  PRIMARY KEY (`Carrera_ID`));
+
+DROP TABLE IF EXISTS `Plan`;
+CREATE TABLE `Plan` (
+  `Plan_ID` varchar(20) NOT NULL,
+  `Nivel` varchar(3) NOT NULL,
+  `Carrera_ID` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`Plan_ID`)
+  CONSTRAINT `Plan_ibfk_1` FOREIGN KEY (`Carrera_ID`) REFERENCES `Carrera` (`Carrera_ID`));
+
+DROP TABLE IF EXISTS `Profesor`;
+CREATE TABLE `Profesor` (
+  `Profesor_ID` varchar(10) NOT NULL,
+  `Nombre` varchar(70) NOT NULL,
+  `Grado` varchar(50) NOT NULL,
+  `Contrato` varchar(50) NOT NULL,
+  `Carrera_ID` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`Profesor_ID`)
+  CONSTRAINT `Profesor_ibfk_1` FOREIGN KEY (`Carrera_ID`) REFERENCES `Carrera` (`Carrera_ID`)
+);
+
+--
+-- Table structure for table `Grupo`
+--
+DROP TABLE IF EXISTS `Materias`;
+CREATE TABLE `Materias` (
+  `Materia_ID` varchar(10) NOT NULL,
+  `Nombre` varchar(60) NOT NULL,
+  `Creditos` int NOT NULL,
+  `Cuatrimestre` int NOT NULL,
+  `Hrs_sem` int NOT NULL,
+  `Plan_ID` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`Materia_ID`)
+  CONSTRAINT `Materias_ibfk_1` FOREIGN KEY (`Plan_ID`) REFERENCES `Plan` (`Plan_ID`)
+);
+
+DROP TABLE IF EXISTS `Grupo`;
+CREATE TABLE `Grupo` (
+  `Grupo_ID` varchar(10) NOT NULL,
+  `Materia_ID` varchar(10) NOT NULL,
+  `Profesor_ID` varchar(10) NOT NULL,
+  PRIMARY KEY (`Grupo_ID`,`Materia_ID`,`Profesor_ID`)
+  CONSTRAINT `Grupo_ibfk_1` FOREIGN KEY (`Materia_ID`) REFERENCES `Materias` (`Materia_ID`),
+  CONSTRAINT `Grupo_ibfk_2` FOREIGN KEY (`Profesor_ID`) REFERENCES `Profesor` (`Profesor_ID`)
+);
+
+
+--
+-- Table structure for table `LogIn`
+--
+
+DROP TABLE IF EXISTS `LogIn`;
+CREATE TABLE `LogIn` (
+  `Log_ID` int NOT NULL,
+  `Profesor_ID` varchar(10) DEFAULT NULL,
+  `Contrasena` varchar(30) DEFAULT NULL,
+  `Tipo` int DEFAULT NULL,
+  PRIMARY KEY (`Log_ID`)
+  CONSTRAINT `LogIn_ibfk_1` FOREIGN KEY (`Profesor_ID`) REFERENCES `Profesor` (`Profesor_ID`)
+);
+
+DROP TABLE IF EXISTS `Confianza`;
+CREATE TABLE `Confianza` (
+  `Materia_ID` varchar(10) NOT NULL,
+  `Plan_ID` varchar(20) NOT NULL,
+  `Profesor_ID` varchar(10) NOT NULL,
+  `P_Conf` int NOT NULL,
+  `P_Conf_Dir` int DEFAULT '0',
+  PRIMARY KEY (`Materia_ID`,`Profesor_ID`));
+
+DROP TABLE IF EXISTS `Disponibilidad`;
+CREATE TABLE `Disponibilidad` (
+  `Dia` int NOT NULL,
+  `Horas` varchar(30) NOT NULL,
+  `Profesor_ID` varchar(10) NOT NULL
+  CONSTRAINT `Disponibilidad_ibfk_1` FOREIGN KEY (`Profesor_ID`) REFERENCES `Profesor` (`Profesor_ID`)); 
+  
+DROP TABLE IF EXISTS `Prestamo`;
+CREATE TABLE `Prestamo` (
+  `Profesor_ID` varchar(10) NOT NULL,
+  `Carrera_ID` varchar(10) NOT NULL
+  CONSTRAINT `Prestamo_ibfk_1` FOREIGN KEY (`Profesor_ID`) REFERENCES `Profesor` (`Profesor_ID`),
+  CONSTRAINT `Prestamo_ibfk_2` FOREIGN KEY (`Carrera_ID`) REFERENCES `Carrera` (`Carrera_ID`));

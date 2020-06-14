@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS `Aula`;
+CREATE TABLE `Aula` (
+  `Aula_ID` varchar(10) PRIMARY KEY,
+  `Nombre` varchar(40) NOT NULL,
+  `Capacidad` int NOT NULL);
+  
+
+CREATE TABLE `Carrera` (
+  `Carrera_ID` varchar(10) PRIMARY KEY NOT NULL,
+  `Nombre` varchar(50) NOT NULL);
+
+
+CREATE TABLE `Plan` (
+  `Plan_ID` varchar(20) PRIMARY KEY NOT NULL,
+  `Nivel` varchar(3) NOT NULL,
+  `Carrera_ID` varchar(10) DEFAULT NULL,
+  CONSTRAINT `Plan_ibfk_1` FOREIGN KEY (`Carrera_ID`) REFERENCES `Carrera` (`Carrera_ID`));

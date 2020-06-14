@@ -1,0 +1,4 @@
+BDQLITE; resources/recursos.db
+DRIVERLITE; org.sqlite.JDBC
+URLITE; jdbc:sqlite:
+

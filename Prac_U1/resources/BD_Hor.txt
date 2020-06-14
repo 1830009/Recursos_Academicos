@@ -1,0 +1,105 @@
+CREATE DATABASE PRUEBA;
+
+DROP TABLE IF EXISTS `Aula`;
+CREATE TABLE `Aula` (
+  `Aula_ID` varchar(10) NOT NULL,
+  `Nombre` varchar(40) NOT NULL,
+  `Capacidad` int NOT NULL,
+  PRIMARY KEY (`Aula_ID`)
+) ;
+
+--
+-- Table structure for table `Carrera`
+--
+
+DROP TABLE IF EXISTS `Carrera`;
+CREATE TABLE `Carrera` (
+  `Carrera_ID` varchar(10) NOT NULL,
+  `Nombre` varchar(50) NOT NULL,
+  PRIMARY KEY (`Carrera_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+--
+-- Table structure for table `Grupo`
+--
+
+DROP TABLE IF EXISTS `Grupo`;
+CREATE TABLE `Grupo` (
+  `Grupo_ID` varchar(10) NOT NULL,
+  `Materia_ID` varchar(10) NOT NULL,
+  `Profesor_ID` varchar(10) NOT NULL,
+  PRIMARY KEY (`Grupo_ID`,`Materia_ID`,`Profesor_ID`),
+  KEY `Materia_ID` (`Materia_ID`),
+  KEY `Profesor_ID` (`Profesor_ID`),
+  CONSTRAINT `Grupo_ibfk_1` FOREIGN KEY (`Materia_ID`) REFERENCES `Materias` (`Materia_ID`),
+  CONSTRAINT `Grupo_ibfk_2` FOREIGN KEY (`Profesor_ID`) REFERENCES `Profesor` (`Profesor_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+--
+-- Table structure for table `LogIn`
+--
+
+DROP TABLE IF EXISTS `LogIn`;
+CREATE TABLE `LogIn` (
+  `Log_ID` int NOT NULL,
+  `Profesor_ID` varchar(10) DEFAULT NULL,
+  `Contrasena` varchar(30) DEFAULT NULL,
+  `Tipo` int DEFAULT NULL,
+  PRIMARY KEY (`Log_ID`),
+  KEY `Profesor_ID` (`Profesor_ID`),
+  CONSTRAINT `LogIn_ibfk_1` FOREIGN KEY (`Profesor_ID`) REFERENCES `Profesor` (`Profesor_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+--
+-- Table structure for table `Materias`
+--
+
+DROP TABLE IF EXISTS `Materias`;
+CREATE TABLE `Materias` (
+  `Materia_ID` varchar(10) NOT NULL,
+  `Nombre` varchar(60) NOT NULL,
+  `Creditos` int NOT NULL,
+  `Cuatrimestre` int NOT NULL,
+  `Hrs_sem` int NOT NULL,
+  `Plan_ID` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`Materia_ID`),
+  KEY `Plan_ID` (`Plan_ID`),
+  CONSTRAINT `Materias_ibfk_1` FOREIGN KEY (`Plan_ID`) REFERENCES `Plan` (`Plan_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+--
+-- Table structure for table `Plan`
+--
+
+DROP TABLE IF EXISTS `Plan`;
+CREATE TABLE `Plan` (
+  `Plan_ID` varchar(20) NOT NULL,
+  `Nivel` varchar(3) NOT NULL,
+  `Carrera_ID` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`Plan_ID`),
+  KEY `Carrera_ID` (`Carrera_ID`),
+  CONSTRAINT `Plan_ibfk_1` FOREIGN KEY (`Carrera_ID`) REFERENCES `Carrera` (`Carrera_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+--
+-- Table structure for table `Profesor`
+--
+
+DROP TABLE IF EXISTS `Profesor`;
+CREATE TABLE `Profesor` (
+  `Profesor_ID` varchar(10) NOT NULL,
+  `Nombre` varchar(70) NOT NULL,
+  `Grado` varchar(50) NOT NULL,
+  `Contrato` varchar(50) NOT NULL,
+  `Carrera_ID` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`Profesor_ID`),
+  KEY `Carrera_ID` (`Carrera_ID`),
+  CONSTRAINT `Profesor_ibfk_1` FOREIGN KEY (`Carrera_ID`) REFERENCES `Carrera` (`Carrera_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Dump completed on 2020-06-03 22:51:21
