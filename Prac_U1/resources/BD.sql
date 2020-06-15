@@ -73,7 +73,7 @@ CREATE TABLE `LogIn` (
   `Log_ID` int NOT NULL,
   `Profesor_ID` varchar(10) DEFAULT NULL,
   `Contrasena` varchar(30) DEFAULT NULL,
-  `Tipo` int DEFAULT NULL,
+  `Tipo` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`Log_ID`),
   CONSTRAINT `LogIn_ibfk_1` FOREIGN KEY (`Profesor_ID`) REFERENCES `Profesor` (`Profesor_ID`));
 
@@ -83,3 +83,39 @@ CREATE TABLE `Prestamo` (
   `Carrera_ID` varchar(10) NOT NULL,
   CONSTRAINT `Prestamo_ibfk_1` FOREIGN KEY (`Profesor_ID`) REFERENCES `Profesor` (`Profesor_ID`),
   CONSTRAINT `Prestamo_ibfk_2` FOREIGN KEY (`Carrera_ID`) REFERENCES `Carrera` (`Carrera_ID`));
+  
+CREATE TABLE categorias_equipo(
+    id_categoria INT(11) NOT NULL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(300)
+);
+
+CREATE TABLE equipo(
+    id_equipo INT(11) NOT NULL PRIMARY KEY,
+    id_categoria INT(11) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(100) NOT NULL,
+    CONSTRAINT FK_equipo_categoriaequipo_id_categoria FOREIGN KEY (id_categoria) REFERENCES categorias_equipo(id_categoria)
+);
+
+CREATE TABLE aula_equipo(
+    id_equipo INT(11) NOT NULL,
+    id_aula VARCHAR(10) NOT NULL,
+    cantidad INT(11) DEFAULT 0,
+    PRIMARY KEY(id_equipo, id_aula),
+    CONSTRAINT FK_aulaequipo_aula_id_aula FOREIGN KEY (id_aula) REFERENCES Aula(Aula_ID),
+    CONSTRAINT FK_aulaequipo_equipo_id_equipo FOREIGN KEY (id_equipo) REFERENCES equipo(id_equipo)
+);
+
+CREATE TABLE uso_aula_grupo(
+    dia TINYINT NOT NULL,
+    espacio_tiempo TINYINT NOT NULL,
+    id_aula VARCHAR(10) NOT NULL,
+    clv_grupo VARCHAR(10) NOT NULL,
+    clv_materia VARCHAR(10) NOT NULL,
+    PRIMARY KEY (dia, espacio_tiempo, id_aula, clv_grupo, clv_materia),
+    CONSTRAINT UNK_dia_espaciotiempo_idaula UNIQUE (dia, espacio_tiempo, id_aula),
+    CONSTRAINT UNK_dia_espaciotiempo_clvgrupo UNIQUE (dia, espacio_tiempo, clv_grupo),
+    CONSTRAINT FK_usoaulagrupo_grupos_clv_grupo FOREIGN KEY (clv_grupo) REFERENCES Grupo(Grupo_ID),
+    CONSTRAINT FK_usoaulagrupo_materias_clv_materia FOREIGN KEY (clv_materia) REFERENCES Materias(Materia_ID),
+    CONSTRAINT FK_usoaulagrupo_aulas_id_aula FOREIGN KEY (id_aula) REFERENCES Aula(Aula_ID));
