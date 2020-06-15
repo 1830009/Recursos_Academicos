@@ -2,7 +2,7 @@
 Administracio de la BD de recursos academicos
 
 
-Comando para ejecutar en Maven==>  mvn compile exec:java -Dexec.cleanupDaemonThreads=false\
+Comando para ejecutar en Maven==>  mvn compile exec:java -Dexec.cleanupDaemonThreads=false
 
 Estructura para Generar la Instalacion de la BD, e Insertar Datos de prueba:\
 ///////////////////////////////////////\
