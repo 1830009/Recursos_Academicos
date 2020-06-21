@@ -1,0 +1,4 @@
+1;1;Silla de alumno;Material Plastico y aluminio, Color gris, uso para el alumno
+2;3;Proyector Epson;Iluminacion optima, diversas conexiones (HDMI,VGA, Ethernet…)
+3;2;Pintarron Blanco;Marco de aluminio, de madera en el fondo, de 1m* 2m de area
+

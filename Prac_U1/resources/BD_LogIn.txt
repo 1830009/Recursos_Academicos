@@ -1,5 +1,5 @@
 L
-1;DSPM;said123;Profesor
-2;MJJL;jasso123;Profesor
-3;DCOG;orozco123;Director
+DSPM;said123;Profesor
+MJJL;jasso123;Profesor
+DCOG;orozco123;Director
 

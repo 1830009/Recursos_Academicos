@@ -1,5 +1,6 @@
 A
 A201;Clases;30
+A202;Clases;30
 A214;Lab_Computo;40
 A203;Centro_Redes;36
 

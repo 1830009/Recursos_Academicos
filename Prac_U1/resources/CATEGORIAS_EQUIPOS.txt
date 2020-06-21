@@ -1,0 +1,4 @@
+1;Mobiliario Escolar;Equipamiento para realizar las actividades en el salon de clases y tener un espacio de trabajo para cada alumno
+2;Herramientas Escolares;Equipamiento para impartir la clase y aplicar los conocimientos en la clase
+3;Herramientas Tecnologicas;Equipo electronico e inteligente para sacar provecho a las clases
+

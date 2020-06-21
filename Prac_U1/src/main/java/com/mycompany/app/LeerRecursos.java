@@ -11,6 +11,68 @@ import java.util.Scanner;
 
 public class LeerRecursos<T> {
 
+    public String[][] LeerEquipo(String Tabla){
+        String[][] M_Datos=null;
+        FileReader leer=null;
+        int i=0;
+        try {
+            leer = new FileReader("resources/" + Tabla + ".txt");
+
+            try {
+                BufferedReader bufferAUX=  new BufferedReader(leer);
+                String linea;
+                String C[];
+                while ((linea = bufferAUX.readLine()) != null) {
+                    if (linea.equals(""))
+                        break;
+                    i++;
+                }
+                M_Datos = new String[i][10];
+                bufferAUX.close();
+
+                try {
+                    leer = new FileReader("resources/" + Tabla + ".txt");
+                    BufferedReader buffer = new BufferedReader(leer);
+                    System.out.println(i);
+                    i = 0;
+
+                    while ((linea = buffer.readLine()) != null) {
+                        System.out.println(linea);
+                        if (linea.equals(""))
+                            break;
+
+                        C = linea.split(";");
+                        switch (Tabla) {
+                            case "CATEGORIAS_EQUIPOS":
+                                for (int x = 0; x < 3; x++)
+                                    M_Datos[i][x] = C[x];
+                                break;
+                            case "EQUIPOS":
+                                for (int x = 0; x < 4; x++)
+                                    M_Datos[i][x] = C[x];
+                                break;
+                            case "AULA_EQUIPOS":
+                                for (int x = 0; x < 3; x++)
+                                    M_Datos[i][x] = C[x];
+                                break;
+                            case "USO_AULA_EQUIPOS":
+                                for (int x = 0; x < 5; x++)
+                                    M_Datos[i][x] = C[x];
+                                break;
+                        }
+                    i++;
+                    }
+                }catch (Exception e) {
+                    System.out.println();
+                }
+            } catch (IOException e) {
+                System.out.println();
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println();
+        }
+        return M_Datos;
+    }
     public List<T> LeerArchivoTxt(String Ruta)  {
         ArrayList<String> ListMat= new ArrayList<>();
         ArrayList<String> ListProf= new ArrayList<>();
@@ -71,7 +133,7 @@ public class LeerRecursos<T> {
 
                             case "L":
 
-                                Lista.add((T) new LogIn(C[0], C[1], C[2],C[3]));
+                                Lista.add((T) new LogIn(C[0], C[1], C[2]));
                                 break;
                             case "E":
                                 //C[1] = C[1].replace("_", " ");

@@ -34,7 +34,7 @@ public class Configuracion {
                         break;
                     C = linea.split(";");
                     F.add(C[d].replaceAll("\\s", ""));
-                    System.out.println(C[d]);
+                    //System.out.println(C[d]);
                 }
 
                 SQLite.rutaSQLite=F.get(0);
