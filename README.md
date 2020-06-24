@@ -9,6 +9,7 @@ Estructura para Generar la Instalacion de la BD, e Insertar Datos de prueba:\
  //Crear una nueva Instancia y llamar al metodo CargarBD()\
  
  SQL A= new SQL();\
+ Configuracion.CargarConfiguracion();\
              A.CargarBD();\
              
 //////////////////////////////////////
