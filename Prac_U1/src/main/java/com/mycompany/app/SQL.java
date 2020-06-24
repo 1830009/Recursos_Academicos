@@ -80,6 +80,8 @@ public class SQL<T> {
         }
         catch(SQLException e) {
             Excepcion.CambiarUsuarioUrlyPass(1);
+            System.out.println("Lo sentimos, no fue posible conectar con un gestor de BD\n"+
+                    "Se intentara a traves de SLQite...");
             InstalarBD();
         }
         try{
