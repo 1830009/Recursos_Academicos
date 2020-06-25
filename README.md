@@ -2,7 +2,9 @@
 Administracio de la BD de recursos academicos
 
 
-Comando para ejecutar en Maven==>  mvn compile exec:java -Dexec.cleanupDaemonThreads=false
+Comando para ejecutar en Maven==>  mvn compile exec:java -Dexec.cleanupDaemonThreads=false\
+
+<<<Recuerde cambiar el usuario y contraseña en el archivo: resources/Conf_SQL.txt>>>\
 
 Estructura para Generar la Instalacion de la BD, e Insertar Datos de prueba:\
 ///////////////////////////////////////\
