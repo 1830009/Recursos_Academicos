@@ -10,19 +10,38 @@ public class Excepcion {
                 "-Dirección de BD correcta\n-Usuario y Contraseña Adecuados.");
         Configuracion Conf = new Configuracion();
         Scanner scan = new Scanner(System.in);
-        System.out.print("\n Por favor Ingresa de nuevo\n-URL: ");
-        String texto = scan.nextLine();
-        if(i==0)
-        Conf.cambiarConexion(texto);
-        else
-        Conf.cambiarUrl_new(texto);
-        System.out.print("-Usuario: ");
-        texto = scan.nextLine();
-        System.out.print("-Contraseña: ");
-        String pass = scan.nextLine();
-        Conf.cambiarUsuario(texto, pass);
-    }
 
+        if (i == 0)
+            System.out.println("El url ingresado es: " + SQL.url);
+
+        else
+            System.out.println("El url ingresado es: " + SQL.url_new);
+
+        System.out.println("Desea cambiarlo? (S/N): ");
+        String texto = scan.nextLine();
+        texto = texto.toUpperCase();
+        if (texto.equals("S")) {
+            System.out.println("Escriba de nuevo la URL:");
+
+            if (i == 0)
+                SQL.url = scan.nextLine();
+
+            else
+                SQL.url_new = scan.nextLine();
+        }
+        System.out.println("\n\nAhora el Usuario y contraseña Ingresado es:\n- " + SQL.user + "\n- " + SQL.password);
+        System.out.println("Desea cambiarlo (S/N): ");
+        texto = scan.nextLine();
+        texto = texto.toUpperCase();
+        if (texto.equals("S")) {
+
+            System.out.print("-Usuario: ");
+            texto = scan.nextLine();
+            System.out.print("-Contraseña: ");
+            String pass = scan.nextLine();
+            Conf.cambiarUsuario(texto, pass);
+        }
+    }
     public static void cambiarDriver() {
         Scanner text = new Scanner(System.in);
 
@@ -45,9 +64,14 @@ public class Excepcion {
         }
 
     }
+    public static void sqlsentence(){
+        System.out.println("Lo sentimos, ocurrio un problema al leer las sentencias, Por favor asegurese que:");
+        System.out.println("-La sintaxis sea correcta\n-El orden logico sea el correcto\n" +
+                "-El nombre de los objetos existan en la BD o esten escritos bien");
+    }
 
     public static void statementFallido() {
-        System.out.println("Lo sentimos, Hemos encontrado un inconveniente al crear un Statement," +
+        System.out.println("Lo sentimos, Hemos encontrado un inconveniente al ejecutar un Statement," +
                 "\n Intentaremos realizar de nuevo la conexión...");
     }
 
@@ -108,7 +132,7 @@ public class Excepcion {
         return A;
     }
 
-    public static void rutaIncorrecta(String rutax){
+    public static String rutaIncorrecta(String rutax){
         String op="";
         Scanner t= new Scanner(System.in);
         System.out.println("Lo sentimos, la ruta o el contenido del script es incorrecto\nPor favor asegurar que:\n" +
@@ -119,10 +143,12 @@ public class Excepcion {
         op=op.toUpperCase();
         if(op.equals("S")){
             System.out.println("Ingrese de nuevo la ruta de acceso al archivo: ");
-            SQL.rutaBD= t.nextLine();
+            op= t.nextLine();
+        return op;
         }
         else
             System.out.println("Intentaremos con la misma ruta...");
+        return rutax;
     }
 
     public static void cambiarDriverLite(){

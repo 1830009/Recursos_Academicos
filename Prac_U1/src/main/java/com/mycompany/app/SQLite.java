@@ -23,13 +23,14 @@ public class SQLite extends SQL {
     public void ConectarLite(){
         File F= new File(rutaSQLite);
        F.delete();
-        System.out.println("Driver LIte:" + DriverLite);
+        System.out.println("Driver Lite:" + DriverLite);
        try {
            Class.forName(DriverLite);
        } catch (ClassNotFoundException e) {
            Excepcion.cambiarDriverLite();
            System.out.println("Volviendo a Intentar...");
            ConectarLite();
+           return;
        }
        try {
            Conexion = DriverManager.getConnection(urlLite + rutaSQLite);
@@ -38,6 +39,7 @@ public class SQLite extends SQL {
            Excepcion.cambiarConexionLite(urlLite,rutaSQLite);
            System.out.println("Volviendo a Intentar...");
            ConectarLite();
+           return;
        }
         try{
             Statement s = Conexion.createStatement();
@@ -46,7 +48,8 @@ public class SQLite extends SQL {
             //Crear la BD
             for(int i=0;i<CrearBD.length;i++)
             s.execute(CrearBD[i]);
-                    s.close();
+
+            s.close();
             //Insertar los Datos a las Tablas
             SQL.Lite=TRUE;
             for(int i=0;i<Tablas.length;i++)
@@ -56,8 +59,10 @@ public class SQLite extends SQL {
             System.out.println("Instalación SQLite Completada con Exito...");
 
         } catch (SQLException throwables) {
-                Excepcion.rutaIncorrecta(ruta);
+            System.out.println(SQL.rutaBD);
+            Excepcion.rutaIncorrecta(rutaSQLite);
                 ConectarLite();
+                return;
         }
 
     }

@@ -1,6 +1,3 @@
-DROP DATABASE IF EXISTS Rec_Academicos;
-CREATE DATABASE Rec_Academicos;
-USE Rec_Academicos;
 DROP TABLE IF EXISTS `AULAS`;
 CREATE TABLE `AULAS` (
   `Aula_ID` varchar(10) NOT NULL,

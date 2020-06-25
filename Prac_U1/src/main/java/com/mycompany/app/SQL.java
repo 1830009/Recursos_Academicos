@@ -23,6 +23,7 @@ public class SQL<T> {
     static String url_new;
     static String Driver;
     static String NombreBD;
+    static int countInstalarBD=0;
     static boolean Lite=FALSE;
     static String[] Tablas = {"Carreras","Aulas","Plan_estudio","Materias","Profesores","Confianza","Disponibilidad",
                                 "Grupos","LogIn","Prestamos","CATEGORIAS_EQUIPOS","EQUIPOS","AULA_EQUIPOS","USO_AULA_EQUIPOS"};
@@ -46,7 +47,7 @@ public class SQL<T> {
                     for (int i = 0; i < Tablas.length; i++)
                         InsertarXLSX(Tablas[i]);
                 } else {
-                    System.out.println("Lo sentimos intenta denuevo, valor invalido\n Solo se admite (1 y 2)\n\n");
+                    System.out.println("Lo sentimos intenta de nuevo, valor invalido\n Solo se admite (1 y 2)\n\n");
                 }
             } while (x != 1 && x != 2);
         }
@@ -79,27 +80,54 @@ public class SQL<T> {
             System.out.println("Conexión generada correctemente...");
         }
         catch(SQLException e) {
+            System.out.println("Lo sentimos, no fue posible conectar con un gestor de BD");
             Excepcion.CambiarUsuarioUrlyPass(1);
-            System.out.println("Lo sentimos, no fue posible conectar con un gestor de BD\n"+
-                    "Se intentara a traves de SLQite...");
-            InstalarBD();
+            System.out.println(countInstalarBD);
+            if(countInstalarBD==0) {
+                countInstalarBD++;
+                InstalarBD();
+
+                    return 0;
+                }
+            else{
+                System.out.println("Aun no es posible lograr conectarse a MySQL, desea utilizar SQLite? (S/N): ");
+                Scanner x= new Scanner(System.in);
+                String texto= x.nextLine();
+                texto= texto.toUpperCase();
+                if(texto.equals("S")){
+                    Excepcion.instalarLite();
+                    return 1;
+                }
+                else
+                    System.out.println("Lo sentimos, no fue posible conectarse a la BD correctamente...");
+            }
+            return 1;
         }
         try{
-            System.out.println(rutaBD);
-            Statement s = conectar.createStatement();
-            s.addBatch("DROP DATABASE IF EXISTS " + NombreBD+";");
-            s.addBatch("CREATE DATABASE "+ NombreBD+";");
-            s.addBatch("USE "+ NombreBD+";");
-            s.executeBatch();
+            System.out.println("Leyendo Script de: "+rutaBD);
             String[] CrearBD=Script();
-            for(int i=0;i<CrearBD.length;i++) {
-                s.execute(CrearBD[i]);
-               // System.out.println(CrearBD[i]);
+            try {
+                Statement s = conectar.createStatement();
+                s.addBatch("DROP DATABASE IF EXISTS " + NombreBD + ";");
+                s.addBatch("CREATE DATABASE " + NombreBD + ";");
+                s.addBatch("USE " + NombreBD + ";");
+                s.executeBatch();
+
+                for (int i = 0; i < CrearBD.length; i++) {
+                    s.execute(CrearBD[i]);
+                    System.out.println(CrearBD[i]);
+                }
+                s.close();
+            }catch (Exception e){
+                Excepcion.sqlsentence();
+                return 1;
             }
-            s.close();
-        } catch (SQLException e) {
-            Excepcion.rutaIncorrecta(rutaBD);
-            InstalarBD();
+        } catch (Exception e) {
+            rutaBD=Excepcion.rutaIncorrecta(rutaBD);
+            if(InstalarBD()==0)
+                return 0;
+            else
+                return 1;
         }
         return 0;
     }
@@ -115,11 +143,11 @@ public class SQL<T> {
                 Script = Script + "\n" + Linea.replace("`", "");
             }
             A=Script.split(";");
-            //System.out.println(Script);
+            System.out.println(Script);
             bufferLine.close();
             leer.close();
         } catch (IOException e) {
-            Excepcion.rutaIncorrecta(rutaBD);
+           rutaBD= Excepcion.rutaIncorrecta(rutaBD);
            A=Script();
         }
         return A;
@@ -166,7 +194,9 @@ public class SQL<T> {
             rs = s.executeQuery("SELECT * FROM " + Tabla.toUpperCase());
 
         if (rs.next() == TRUE) {
-            System.out.println("Tabla a Consultar: "+Tabla.toUpperCase());
+
+            System.out.println("\n-------------------------------------\n" +
+                    "Tabla a Consultar: "+Tabla.toUpperCase());
             switch (Tabla.toUpperCase()) {
                 case "PROFESORES":
                     do {
@@ -476,8 +506,7 @@ public class SQL<T> {
             s.close();
             conectar.close();
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error");
+            System.out.println("[Advertencia]: La sentencia pudo no ejecutarse correctamente...");
         }
 
     }
@@ -638,7 +667,7 @@ public class SQL<T> {
         }
         try {
             M_Datos= Ee.LeerExcel(Tabla);
-            System.out.println("LONGITUD****************** "+M_Datos.length);
+
             switch (Tabla.toUpperCase()) {
                 case "AULAS":
 

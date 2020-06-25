@@ -85,7 +85,9 @@ public class Configuracion {
 
             }
         } catch (FileNotFoundException e) {
-            Excepcion.rutaIncorrecta(rutaConf);
+            rutaConf=Excepcion.rutaIncorrecta(rutaConf);
+            CargarConfiguracion();
+            return;
         }
 
     }
